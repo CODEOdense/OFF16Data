@@ -7,6 +7,9 @@ var Films = require('../repositories/films');
 var Film = require('../models/film');
 var controller = new Foxx.Controller(applicationContext);
 
+//it's a hackathon, so screw encapsulation
+var db = require("org/arangodb").db
+
 var filmIdSchema = joi.string().required()
 .description('The id of the film')
 .meta({allowMultiple: false});
@@ -24,6 +27,19 @@ controller.get('/', function (req, res) {
   res.json(_.map(films.all(), function (model) {
     return model.forClient();
   }));
+});
+
+/** Seach films
+ *
+ * Lists of all with a text-property corresponding "search"-param
+ */
+controller.get('/search/:searchparam', function (req, res) {
+    let p = req.params('searchparam');
+    let q = "FOR f IN off2016_films FILTER CONTAINS(LOWER(f.original_title),LOWER(@param)) RETURN f";
+    
+    let results = db._query(q,{param: p });
+    
+    res.json(results);
 });
 
 /** Creates a new film.
@@ -51,22 +67,6 @@ controller.get('/:id', function (req, res) {
 .pathParam('id', filmIdSchema)
 .errorResponse(ArangoError, 404, 'The film could not be found');
 
-/** Replaces a film.
- *
- * Changes a film. The information has to be in the
- * requestBody.
- */
-controller.put('/:id', function (req, res) {
-  var id = req.urlParameters.id;
-  var film = req.parameters.film;
-  res.json(films.replaceById(id, film));
-})
-.pathParam('id', filmIdSchema)
-.bodyParam('film', {
-  description: 'The film you want your old one to be replaced with',
-  type: Film
-})
-.errorResponse(ArangoError, 404, 'The film could not be found');
 
 /** Updates a film.
  *

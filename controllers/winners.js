@@ -51,22 +51,6 @@ controller.get('/:id', function (req, res) {
 .pathParam('id', winnerIdSchema)
 .errorResponse(ArangoError, 404, 'The winner could not be found');
 
-/** Replaces a winner.
- *
- * Changes a winner. The information has to be in the
- * requestBody.
- */
-controller.put('/:id', function (req, res) {
-  var id = req.urlParameters.id;
-  var winner = req.parameters.winner;
-  res.json(winners.replaceById(id, winner));
-})
-.pathParam('id', winnerIdSchema)
-.bodyParam('winner', {
-  description: 'The winner you want your old one to be replaced with',
-  type: Winner
-})
-.errorResponse(ArangoError, 404, 'The winner could not be found');
 
 /** Updates a winner.
  *
