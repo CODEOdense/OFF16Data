@@ -9,8 +9,9 @@
   "license": "Open source",
   "controllers": {
     "/films": "controllers/films.js",
-    "/winners": "controllers/winners.js",
-    "/fmk": "controllers/fmk.js"
+    "/fmk": "controllers/fmk.js",
+    "/cast": "controllers/cast.js",
+    "/victim": "controllers/victim.js"
   },
   "scripts": {
     "setup": "scripts/setup.js",

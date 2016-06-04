@@ -55,7 +55,11 @@ controller.get('/:id', function (req, res) {
 controller.patch('/:id', function (req, res) {
   var id = req.urlParameters.id;
   var patchData = req.parameters.patch;
-  res.json(Fmks.updateById(id, patchData));
+    let q = "FOR x IN off2016_FMK FILTER x._key == @docId UPDATE x WITH @patch IN off2016_FMK RETURN NEW";
+    
+    let results = db._query(q,{docId: id, patch: patchData });
+   
+  res.json(results._documents[0]);
 })
 .pathParam('id', fmkIdSchema)
 .bodyParam('patch', {
