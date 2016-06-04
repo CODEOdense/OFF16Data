@@ -8,3 +8,6 @@ function dropCollection(name) {
 
 dropCollection("films");
 dropCollection("winners");
+dropCollection("cast");
+dropCollection("FMK");
+
