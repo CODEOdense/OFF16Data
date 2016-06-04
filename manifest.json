@@ -1,0 +1,19 @@
+{
+  "name": "OFF2016HACK",
+  "version": "0.0.1",
+  "description": "http://www.meetup.com/CODE-Odense/events/230846747/",
+  "engines": {
+    "arangodb": "^2.8.0"
+  },
+  "author": "Julian May",
+  "license": "Open source",
+  "controllers": {
+    "/films": "controllers/films.js",
+    "/winners": "controllers/winners.js"
+  },
+  "scripts": {
+    "setup": "scripts/setup.js",
+    "teardown": "scripts/teardown.js"
+  },
+  "tests": "test/**/*.js"
+}
