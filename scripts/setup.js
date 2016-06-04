@@ -3,18 +3,20 @@ var db = require("org/arangodb").db;
 
 function createCollection(name) {
   var collectionName = applicationContext.collectionName(name);
-  if (db._collection(collectionName) === null) {
-    db._create(collectionName);
+  var coll = db._collection(collectionName);
+  if (coll === null) {
+    coll = db._create(collectionName);
   } else if (applicationContext.isProduction) {
     console.warn("collection '%s' already exists. Leaving it untouched.", collectionName);
   }
+  return coll;
 }
 
-createCollection("films");
-createCollection("winners");
-createCollection("cast");
-createCollection("FMK");
+var films = createCollection("films");
+var winners = createCollection("winners");
+var cast = createCollection("cast");
+var fmk = createCollection("FMK");
 
 
 //Add startupdata
-db._collection("FMK").insert({"hello":"world"});
+fmk.insert({"hello":"world"});
