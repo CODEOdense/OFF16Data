@@ -12,3 +12,9 @@ function createCollection(name) {
 
 createCollection("films");
 createCollection("winners");
+createCollection("cast");
+createCollection("FMK");
+
+
+//Add startupdata
+db._collection("FMK").insert({"hello":"world"});
