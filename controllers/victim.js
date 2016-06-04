@@ -19,6 +19,24 @@ controller.get('/', function (req, res) {
     res.json(results._documents);
 });
 
+/** Get total victims stats
+ *
+ * Gets victim stats
+ */
+controller.get('/stats', function (req, res) {
+    let victimsWithStats = db._query("for v in off2016_cast filter v.stats.m > 0 || v.stats.k > 0 || v.stats.f > 0 "+
+"return { stats: v.stats, id: v._key, name: v.name, image_path: v.image_path}",{ })._documents;
+    let mostFucked = db._query("for v in off2016_cast sort v.stats.f desc limit 1 return { stats: v.stats, id: v._key, name: v.name, image_path: v.image_path}",{})._documents[0];
+    let mostMarried = db._query("for v in off2016_cast sort v.stats.m desc limit 1 return { stats: v.stats, id: v._key, name: v.name, image_path: v.image_path}",{})._documents[0];
+    let mostKilled = db._query("for v in off2016_cast sort v.stats.k desc limit 1 return { stats: v.stats, id: v._key, name: v.name, image_path: v.image_path}",{})._documents[0];
+    res.json({
+        mostFd: mostFucked,
+        mostMd: mostMarried,
+        mostKd: mostKilled,
+        votes: victimsWithStats
+    });
+});
+
 /** Registers verdict about a victim
  *
  * Registers verdict about a victim ( f, m or k )

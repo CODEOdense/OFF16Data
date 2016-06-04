@@ -18243,8 +18243,8 @@ var off16cast =  [
   {
     "stats": {
       "f": 0,
-      "m": 16,
-      "k": 1
+      "m": 0,
+      "k": 0
     },
     "name": "50 Cent",
     "image_path": "/gsEwsWWtC5xwFCzL2CnPmc24uIO.jpg",
