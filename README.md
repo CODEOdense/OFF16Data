@@ -46,4 +46,15 @@ FOR a IN off2016_actors
 ```
 
 
+Now, the edge-collection "CastedInFilm" is created, so we can start modelling the relations. The 'filmIds' array on our off2016_cast collection is used to relate _cast vertices with _film vertices:
+
+```
+FOR c in off2016_cast
+    for f in c.filmIds
+        insert { _from: c._id, _to: CONCAT('off2016_films/',f) } in off2016_castedInFilm
+```
+
+Now the same process is done for films (remove dublettes) and awards won (using film title as key)
+
+
     
