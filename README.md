@@ -32,4 +32,18 @@ FOR f IN off2016_films FILTER HAS(f,"cast") && LENGTH(f.cast) > 0
 ``` 
   
   
+Next, using "name" as key, normalizing the list of actors (into "cast)
+
+```
+FOR a IN off2016_actors 
+    Collect name = a.name into instances
+    let theName = FIRST(instances).a.name
+    let theImage = FIRST(instances).a.image_path
+    let fCol = (for i in instances return i.a.filmId)
+    
+    INSERT {name:theName, filmIds:fCol, image_path:theImage} IN off2016_cast
+    return NEW
+```
+
+
     
